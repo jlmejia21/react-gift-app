@@ -1,28 +1,20 @@
-import { useEffect, useState } from "react";
-import { getGifs } from "../helpers/getGifs";
+import { useFetchGifs } from "../hooks/useFetchGifs";
+import { GiftItem } from "./GiftItem";
 
 export const GifGrid = ({ category }) => {
-  const [images, setImages] = useState([]);
-  const getImages = async () => {
-    const newImages = await getGifs(category);
-    setImages(newImages);
-  };
-  useEffect(() => {
-    getImages();
-  }, []);
+  const { images, isLoading } = useFetchGifs(category);
+
   return (
     <>
       <h3>{category}</h3>
-      <ol>
+      {isLoading && <h2>Cargando....</h2>}
+      <div className="card-grid">
         {images.map((image) => (
           <>
-            <li key={image.id}>{image.title}</li>
-            <h2>{image.id}</h2>
-            <h1> {image.title}</h1>
-            <img loading="lazy" src={image.url} alt="" />
+            <GiftItem key={image.id} {...image} />
           </>
         ))}
-      </ol>
+      </div>
     </>
   );
 };

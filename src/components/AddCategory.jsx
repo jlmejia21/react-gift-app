@@ -11,6 +11,7 @@ export const AddCategory = ({ onNewCategory }) => {
     onNewCategory(inputValue.trim());
     setInputValue("");
   };
+
   return (
     <form onSubmit={onSubmit}>
       <input
